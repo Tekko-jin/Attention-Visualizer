@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Attention Visualizer</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="workspace">
+        <div class="toolbar">
+          <div>
+            <h1>Attention Visualizer</h1>
+            <p>Analyze attention maps for images</p>
+          </div>
+          <label class="upload">
+            <input id="fileInput" type="file" accept="image/*" />
+            <span>Upload Image</span>
+          </label>
+        </div>
+
+        <div class="stage">
+          <div class="canvasPanel">
+            <canvas id="imageCanvas" width="672" height="672"></canvas>
+            <div id="status" class="status">Loading...</div>
+          </div>
+
+          <aside class="controls">
+            <div class="control">
+              <label for="modelMode">Model</label>
+              <select id="modelMode">
+                <option value="simulation" selected>Simple Transformer (Random Weights)</option>
+                <option value="vit_b_16">Pretrained ViT-B/16</option>
+                <option value="dinov2_vits14">DINOv2 ViT-S/14</option>
+              </select>
+            </div>
+
+            <div class="control">
+              <label for="patchSize">Patch Size</label>
+              <select id="patchSize">
+                <option value="16" selected>16 px -> grid 14 x 14</option>
+                <option value="14">14 px -> grid 16 x 16</option>
+                <option value="28">28 px -> grid 8 x 8</option>
+              </select>
+            </div>
+
+            <div class="control">
+              <label for="layer">Layer <strong id="layerValue">0</strong></label>
+              <input id="layer" type="range" min="0" max="7" value="0" />
+            </div>
+
+            <div class="control">
+              <label for="head">Head <strong id="headValue">0</strong></label>
+              <input id="head" type="range" min="0" max="5" value="0" />
+            </div>
+
+            <div class="control">
+              <label for="token">Token <strong id="tokenValue">CLS</strong></label>
+              <input id="token" type="range" min="0" max="196" value="0" />
+            </div>
+
+            <div class="segmented" role="tablist" aria-label="Mode">
+              <button class="active" data-mode="outgoing">Token</button>
+              <button data-mode="incoming">Other</button>
+            </div>
+
+            <div class="metrics">
+              <div><span>Model</span><strong id="modelInfo">-</strong></div>
+              <div><span>Token</span><strong id="tokenCount">-</strong></div>
+              <div><span>Grid</span><strong id="gridInfo">-</strong></div>
+              <div><span>Max Value</span><strong id="maxWeight">-</strong></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="lower">
+        <div class="panel">
+          <div class="panelHead">
+            <h2>Layers</h2>
+            <span>CLS Attention/span>
+          </div>
+          <div id="layers" class="layers"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panelHead">
+            <h2>Tokens</h2>
+            <span>RGB, contour, position</span>
+          </div>
+          <div id="tokens" class="tokens"></div>
+        </div>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
