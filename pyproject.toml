@@ -1,6 +1,0 @@
-[project]
-name = "attention_visualizer"
-version = "0.1.0"
-
-[project.scripts]
-app = "main:app"
